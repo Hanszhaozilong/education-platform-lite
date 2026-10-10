@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">人员管理</span><h1>{{ '编辑账户' if person else '创建账户' }}</h1></div><a class="button secondary" href="{{ url_for('people', role=selected_role if selected_role in roles else 'student') }}">返回列表</a></div>
+<section class="card form-card"><form method="post">{{ csrf() }}<div class="form-grid">
+<label>姓名<input name="name" value="{{ person.name if person else '' }}" required maxlength="80" placeholder="填写真实显示姓名"></label>
+<label>用户名<input name="username" value="{{ person.username if person else '' }}" required maxlength="80" autocomplete="off"></label>
+<label>角色<select name="role" id="person-role">{% for role, label in roles.items() %}{% if (not person or person.role == role) and (g.user.role == 'admin' or role in ['teacher','student']) %}<option value="{{ role }}" {% if selected_role == role %}selected{% endif %}>{{ label }}</option>{% endif %}{% endfor %}</select></label>
+<label>{{ '新密码（留空保留原密码）' if person else '初始密码（至少 12 位）' }}<input name="password" type="password" autocomplete="new-password" minlength="12" {% if not person %}required{% endif %}></label>
+<label>联系电话（选填）<input name="phone" value="{{ person.phone or '' if person else '' }}" inputmode="numeric" pattern="1[0-9]{10}" maxlength="11"></label>
+<label data-role="student">联系电话归属<select name="phone_owner">{% for owner in ['本人','父亲','母亲'] %}<option {% if person and person.phone_owner == owner %}selected{% endif %}>{{ owner }}</option>{% endfor %}</select></label>
+<label data-role="student">当前年级<select name="grade"><option value="">未填写</option>{% for value,label in grades.items() %}<option value="{{ value }}" {% if person and person.grade == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<fieldset class="wide" data-role="teacher"><legend>授教科目 · 管理人员填写</legend><div class="check-grid">{% for subject in subjects %}<label class="check-option"><input type="checkbox" name="subjects" value="{{ subject }}" {% if person and subject in person.subject_list %}checked{% endif %}>{{ subject }}</label>{% endfor %}</div></fieldset>
+<label class="wide">管理备注 · 仅校长和超级管理员可见<textarea name="private_note" rows="4" maxlength="2000" placeholder="学生情况，或教师从业经验、毕业院校、在职场所等">{{ person.private_note if person else '' }}</textarea></label>
+</div><div class="form-actions"><button class="button" type="submit">保存账户</button></div></form></section>
+{% endblock %}

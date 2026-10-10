@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}技术支持 · 泪见雪.{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">TECHNICAL SUPPORT</span><h1>技术支持与作者</h1><p class="subtle">使用问题、部署协助与功能交流，欢迎联系。</p></div></div>
+<section class="card support-card"><div><span class="badge purple">原创署名 · GitHub 精简版</span><h2 class="author-name"><a href="http://154.36.185.225/" target="_blank" rel="noopener noreferrer">泪见雪. ↗</a></h2><p class="subtle">点击作者姓名，访问个人博客。</p><dl class="contacts"><dt>微信</dt><dd>NekoByte_Zzl</dd><dt>QQ</dt><dd>2578783496</dd><dt>个人博客</dt><dd><a href="http://154.36.185.225/" target="_blank" rel="noopener noreferrer">http://154.36.185.225/</a></dd></dl><p class="hint">扫码添加作者微信，联系时请注明「教务平台技术支持」。<br>请勿发送学生个人信息、数据库或服务器密码。</p></div><figure><img src="{{ url_for('static', filename='support-wechat.jpg') }}" alt="泪见雪. 的微信好友二维码" width="888" height="1131"><figcaption>作者微信 · 技术支持</figcaption></figure></section>
+<section class="card spaced"><h2>这个版本包含什么</h2><p class="preserve spaced">账号与人员管理、周课表、手动考勤、教室状态、试听 CRM 和公告。面向单校区、小规模部署；教室状态人工维护。高级财务、智能排课、OCR、小程序和私信模块不在此版本中。</p></section>
+{% endblock %}

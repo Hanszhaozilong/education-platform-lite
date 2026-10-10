@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">信息协同</span><h1>公告</h1></div></div>
+{% if manager %}<section class="card form-card"><h2>发布公告</h2><form method="post">{{ csrf() }}<label>标题<input name="title" required maxlength="120"></label><label>公告内容<textarea name="body" required maxlength="4000" rows="4"></textarea></label><div class="form-actions"><button class="button" type="submit">发布公告</button></div></form></section>{% endif %}
+{% for notice in notices %}<article class="card spaced"><h2>{{ notice.title }}</h2><p class="preserve spaced">{{ notice.body }}</p></article>{% else %}<div class="card empty spaced">暂无公告</div>{% endfor %}
+{% endblock %}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}教培教务平台 · 精简版{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='lite.css') }}">
+  <script src="{{ url_for('static', filename='lite.js') }}" defer></script>
+</head>
+<body class="{% if not g.user %}guest{% endif %}">
+{% macro csrf() %}<input type="hidden" name="csrf" value="{{ session.csrf }}">{% endmacro %}
+{% if g.user %}
+<aside class="sidebar">
+  <a class="brand" href="{{ url_for('home') }}"><span class="brand-icon">教</span><span>教培教务平台<small>COMMUNITY · 精简版</small></span></a>
+  <p class="nav-label">概览</p>
+  <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">工作台</a>
+  <p class="nav-label">教务管理</p>
+  <a class="nav-link {% if request.endpoint in ['schedule','new_lesson','lesson_detail'] %}active{% endif %}" href="{{ url_for('schedule') }}">排课与考勤</a>
+  <a class="nav-link {% if request.endpoint == 'classrooms' %}active{% endif %}" href="{{ url_for('classrooms') }}">教室状态</a>
+  {% if manager %}
+  <p class="nav-label">人员与招生</p>
+  <a class="nav-link {% if request.endpoint in ['people','edit_person'] and request.args.get('role','student') == 'student' %}active{% endif %}" href="{{ url_for('people', role='student') }}">学生管理</a>
+  <a class="nav-link {% if request.endpoint in ['people','edit_person'] and request.args.get('role') == 'teacher' %}active{% endif %}" href="{{ url_for('people', role='teacher') }}">教师管理</a>
+  {% if g.user.role == 'admin' %}<a class="nav-link" href="{{ url_for('people', role='principal') }}">校长管理</a>{% endif %}
+  <a class="nav-link {% if request.endpoint == 'leads' %}active{% endif %}" href="{{ url_for('leads') }}">试听 / 意向学员 CRM</a>
+  {% endif %}
+  <p class="nav-label">协同与帮助</p>
+  <a class="nav-link {% if request.endpoint == 'notices' %}active{% endif %}" href="{{ url_for('notices') }}">公告</a>
+  <a class="nav-link {% if request.endpoint == 'support' %}active{% endif %}" href="{{ url_for('support') }}">技术支持</a>
+  <div class="sidebar-credit">由 <a href="http://154.36.185.225/" target="_blank" rel="noopener noreferrer">泪见雪.</a> 制作<br>GitHub 社区精简版</div>
+</aside>
+<header class="topbar"><span class="subtle">轻量教务 · 清晰协作</span><div class="topbar-user"><span class="avatar">{{ g.user.name[:1] }}</span><a href="{{ url_for('profile') }}">{{ g.user.name }}</a><span class="badge purple">{{ roles[g.user.role] }}</span><form action="{{ url_for('logout') }}" method="post">{{ csrf() }}<button class="button small secondary" type="submit">退出登录</button></form></div></header>
+{% endif %}
+<main>
+  {% for category, message in get_flashed_messages(with_categories=true) %}<div class="alert {{ category }}" role="status">{{ message }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+  <footer class="footer">教培教务平台 · GitHub 精简版 <span>技术支持 / 原创署名：<a href="http://154.36.185.225/" target="_blank" rel="noopener noreferrer">泪见雪.</a></span><a href="{{ url_for('support') }}">联系作者</a></footer>
+</main>
+</body>
+</html>

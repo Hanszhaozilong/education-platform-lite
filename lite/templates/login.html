@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}登录 · 教培教务平台精简版{% endblock %}
+{% block content %}
+<div class="login-wrap">
+  <div class="brand login-brand"><span class="brand-icon">教</span><span>教培教务平台<small>GitHub 社区精简版</small></span></div>
+  <section class="card login-card">
+    <span class="eyebrow">WELCOME BACK</span><h1>登录教务平台</h1><p class="subtle">教师、学生、校长和超级管理员使用各自的账号登录。</p>
+    <form method="post">{{ csrf() }}
+      <label>用户名或手机号<input name="username" autocomplete="username" required maxlength="80" placeholder="请输入账号"></label>
+      <label>密码<input name="password" type="password" autocomplete="current-password" required placeholder="请输入密码"></label>
+      <button class="button full" type="submit">登录</button>
+    </form>
+    <p class="login-help">首次使用请由管理员创建账号。<a href="{{ url_for('support') }}">需要帮助？</a></p>
+  </section>
+</div>
+{% endblock %}

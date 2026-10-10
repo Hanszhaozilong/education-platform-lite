@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">教务管理</span><h1>新增排课</h1><p class="subtle">系统检查教师、学生和教室的时间冲突。</p></div><a class="button secondary" href="{{ url_for('schedule') }}">返回课表</a></div>
+<section class="card form-card"><form method="post">{{ csrf() }}<div class="form-grid">
+<label>科目<select name="subject" class="subject-select" required><option value="">请选择科目</option>{% for subject in subjects %}<option>{{ subject }}</option>{% endfor %}</select></label>
+<label>任课教师<select name="teacher_id" class="teacher-select" required><option value="">请选择教师</option>{% for teacher in teachers %}<option value="{{ teacher.id }}" data-subjects="{{ teacher.subjects }}">{{ teacher.name }} · {{ teacher.subjects.replace(',', ' / ') }}</option>{% endfor %}</select></label>
+<label>上课时间<input type="datetime-local" name="starts_at" required></label><label>下课时间<input type="datetime-local" name="ends_at" required></label>
+<label class="wide">教室（选填）<select name="classroom_id"><option value="">暂不安排教室</option>{% for room in rooms %}<option value="{{ room.id }}" {% if room.status != 'free' %}disabled{% endif %}>{{ room.name }} · {{ room_states[room.status] }}</option>{% endfor %}</select></label>
+<fieldset class="wide"><legend>选择上课学生 · 支持多人</legend><div class="check-grid">{% for student in students %}<label class="check-option"><input name="students" value="{{ student.id }}" type="checkbox">{{ student.name }}<small>{{ grades.get(student.grade, '年级未填') }}</small></label>{% else %}<p class="subtle">请先在学生管理中创建学生账户。</p>{% endfor %}</div></fieldset>
+<label class="wide">排课备注<textarea name="note" rows="3" maxlength="300"></textarea></label>
+</div><p class="hint">科目与教师双向筛选。精简版按具体日期逐节创建课程。</p><div class="form-actions"><button type="submit" class="button">创建排课</button></div></form></section>
+{% endblock %}

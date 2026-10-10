@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="welcome card"><div><span class="eyebrow">{{ today.isoformat() }} · {{ roles[g.user.role] }}工作台</span><h1>你好，{{ g.user.name }}</h1><p class="subtle">把课程安排好，把每一次教学记录清楚。</p></div><span class="welcome-mark">教</span></section>
+<div class="stats">
+  <div class="card stat"><span>今日课程</span><strong>{{ lessons|length }}</strong><small>节排课</small></div>
+  {% if manager %}<div class="card stat"><span>在读学生</span><strong>{{ student_count }}</strong><small>人</small></div><div class="card stat"><span>任课教师</span><strong>{{ teacher_count }}</strong><small>人</small></div>{% endif %}
+  <div class="card stat"><span>空闲教室</span><strong>{{ free_rooms }}</strong><small>间 · 人工维护</small></div>
+</div>
+<div class="two-columns">
+  <section class="card"><div class="section-heading"><h2>今日课程</h2><a class="button small secondary" href="{{ url_for('schedule') }}">查看周课表 →</a></div>
+    {% for lesson in lessons %}<a class="lesson-row" href="{{ url_for('lesson_detail', lesson_id=lesson.id) }}"><div class="time-chip">{{ lesson.starts_at.strftime('%H:%M') }}<small>{{ lesson.ends_at.strftime('%H:%M') }}</small></div><div><strong>{{ lesson.subject }}</strong><p>{{ lesson.teacher.name }} · {{ lesson.students|length }} 人{% if lesson.classroom %} · {{ lesson.classroom.name }}{% endif %}</p></div><span class="row-arrow">→</span></a>{% else %}<div class="empty">今天没有安排课程</div>{% endfor %}
+  </section>
+  <section class="card"><div class="section-heading"><h2>快捷入口</h2></div><div class="shortcuts"><a href="{{ url_for('schedule') }}">周课表<span>查看课程与考勤 →</span></a><a href="{{ url_for('classrooms') }}">教室状态<span>查看当前空闲教室 →</span></a>{% if manager %}<a href="{{ url_for('leads') }}">招生跟进<span>试听 / 意向学员 CRM →</span></a><a href="{{ url_for('people', role='student') }}">学生管理<span>创建账户与管理资料 →</span></a>{% endif %}</div></section>
+</div>
+<section class="card spaced"><div class="section-heading"><h2>最新公告</h2><a class="button small secondary" href="{{ url_for('notices') }}">查看全部 →</a></div>{% for notice in notices %}<article class="notice"><h3>{{ notice.title }}</h3><p class="preserve">{{ notice.body }}</p></article>{% else %}<div class="empty">暂无公告</div>{% endfor %}</section>
+{% endblock %}
