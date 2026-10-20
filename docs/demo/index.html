@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="教培教务平台精简版在线演示：排课、手动考勤、人员管理、试听 CRM 和教室状态。全部为虚构数据，作者：泪见雪。">
+  <meta name="theme-color" content="#6357ed">
+  <title>在线演示 · 教培教务平台</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./assets/lite.css">
+  <link rel="stylesheet" href="./assets/demo.css">
+  <script type="module" src="./assets/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#view">跳到主要内容</a>
+  <aside class="sidebar" id="sidebar" aria-label="主导航">
+    <a class="brand" href="#home"><span class="brand-icon">教</span><span>教培教务平台<small>COMMUNITY · 在线演示</small></span></a>
+    <nav id="navigation"></nav>
+    <div class="sidebar-credit">由 <a href="http://154.36.185.225/" target="_blank" rel="noopener noreferrer">泪见雪.</a> 制作<br>GitHub 精简版 · 虚构演示数据</div>
+  </aside>
+  <header class="topbar">
+    <div class="topbar-title"><button class="button small secondary menu-button" id="menu-toggle" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button><span class="subtle">轻量教务 · 清晰协作</span><span class="badge purple">在线演示</span></div>
+    <div class="topbar-user"><label class="sr-only" for="role">切换演示角色</label><select id="role" aria-label="切换演示角色"><option value="admin">超级管理员视角</option><option value="principal">校长视角</option><option value="teacher">教师视角</option><option value="student">学生视角</option></select><a class="button small secondary repo-link" href="https://github.com/Hanszhaozilong/education-platform-lite" target="_blank" rel="noopener noreferrer">GitHub 源码 ↗</a></div>
+  </header>
+  <main>
+    <div class="demo-banner"><div><strong>放心试用，全部为虚构数据</strong><p>操作仅保存在当前浏览器，不连接正式系统。请勿输入真实姓名、电话或密码。</p></div><button class="button small secondary" data-action="reset">重置演示</button></div>
+    <div id="view" tabindex="-1"></div>
+    <footer class="footer">教培教务平台 · GitHub 精简版<span>技术支持 / 原创署名：<a href="http://154.36.185.225/" target="_blank" rel="noopener noreferrer">泪见雪.</a></span><a href="#support">QQ：2578783496</a></footer>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="card">请启用 JavaScript 后体验演示。也可以在 <a href="https://github.com/Hanszhaozilong/education-platform-lite">GitHub 仓库</a>查看截图和源码。</p></noscript>
+</body>
+</html>
